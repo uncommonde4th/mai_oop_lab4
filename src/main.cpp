@@ -8,29 +8,30 @@
 #include "../include/trapezoid.h"
 #include "../include/array.h"
 
-
-using FigurePtr = std::shared_ptr<Figure<double>>;
-using FigureArray = Array<FigurePtr>;
+using namespace std;
 
 int main() {
-    FigureArray figures;
-
-    std::cout << "Ввод пятиугольника (5 вершин):\n";
+    Array<shared_ptr<Pentagon<int>>> pentagons;
+    
+    pentagons.add(make_shared<Pentagon<int>>(
+        Point<int>(0,0), Point<int>(2,0), 
+        Point<int>(2,2), Point<int>(0,2), Point<int>(1,1)
+    ));
+    pentagons.add(make_shared<Pentagon<int>>(
+        Point<int>(1,1), Point<int>(3,1), 
+        Point<int>(3,3), Point<int>(1,3), Point<int>(2,2)
+    ));
+    
+    cout << "Пятиугольники: " << pentagons;
+    cout << "Суммарная площадь: " << pentagons.allArea() << endl;
+    
+    Array<shared_ptr<Figure<double>>> figures;
+    
     figures.readFigure<Pentagon<double>>();
-
-    std::cout << "\nВвод ромба (4 вершины):\n";
     figures.readFigure<Rhombus<double>>();
-
-    std::cout << "\nВвод трапеции (4 вершины):\n";
-    figures.readFigure<Trapezoid<double>>();
-
-    std::cout << "\nВсе фигуры:\n" << figures;
-
-    std::cout << "Общая площадь: " << figures.allArea() << "\n";
-
-    figures.remove(0);
-    std::cout << "\nПосле удаления первой фигуры:\n" << figures;
-    std::cout << "Новая общая площадь: " << figures.allArea() << "\n";
-
+    
+    cout << "Фигуры: " << figures << endl;
+    cout << "Общая площадь: " << figures.allArea() << endl;
+    
     return 0;
 }
